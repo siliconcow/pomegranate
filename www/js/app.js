@@ -1,4 +1,5 @@
 var watchID = null;
+var highest = 0;
 //var ctx = null;
 //var data = {
 //	labels : ["now"],
@@ -29,17 +30,20 @@ var watchID = null;
 
  // Wait for device API libraries to load
  //
-// document.addEventListener("deviceready", onDeviceReady, false);
+ document.addEventListener("deviceready", onDeviceReady, false);
 // var s = document.createElement("script");
 // s.type = "text/javascript";
 // s.src = "js/chart.js";
 // document.head.appendChild(s)
+//
 
  // device APIs are available
  //
  function onDeviceReady() {
+    document.body.style.background = 'green';
+     var element = document.getElementById('version');
+     element.innterHTML = "version 2"
      startWatch();
-     document.body.style.background = 'green';
 //  ctx = document.getElementById("myChart").getContext("2d");
 //     new Chart(ctx).Line(data);
  }
@@ -49,7 +53,7 @@ var watchID = null;
  function startWatch() {
 
      // Update acceleration every 3 seconds
-     var options = { frequency: 500 };
+     var options = { frequency: 100 };
 
      watchID = navigator.accelerometer.watchAcceleration(onSuccess, onError, options);
  }
@@ -67,12 +71,18 @@ var watchID = null;
  //
  function onSuccess(acceleration) {
      var element = document.getElementById('accelerometer');
+     var current = Math.abs(acceleration.x) + Math.abs(acceleration.y) + Math.abs(acceleration.z);
+     if(current > highest){
+     highest=current
+     }
+
      element.innerHTML = 'Acceleration X: ' + acceleration.x         + '<br />' +
                          'Acceleration Y: ' + acceleration.y         + '<br />' +
                          'Acceleration Z: ' + acceleration.z         + '<br />' +
-                         'Timestamp: '      + acceleration.timestamp + '<br />';
+                         'Timestamp: '      + acceleration.timestamp + '<br />' +
+                         'Highest: '      + highest + '<br />';
 
-     if (abs(acceleration.x) + abs(acceleration.y) + abs(acceleration.z) > 20) {
+     if (current > 20) {
 	     document.body.style.background = 'red';
      }
   //  alert('testing');
