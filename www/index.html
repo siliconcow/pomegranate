@@ -5,10 +5,38 @@
     <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
 
     <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
+    <script src="js/chart.js"></script>
     <script type="text/javascript" charset="utf-8">
 
     // The watch id references the current `watchAcceleration`
     var watchID = null;
+    var ctx = null;
+    var data = {
+    	labels : ["now],
+    	datasets : [
+    		{
+    			fillColor : "rgba(220,220,220,0.5)",
+    			strokeColor : "rgba(220,220,220,1)",
+    			pointColor : "rgba(220,220,220,1)",
+    			pointStrokeColor : "#fff",
+    			data : [0]
+    		},
+    		{
+    			fillColor : "rgba(151,187,205,0.5)",
+    			strokeColor : "rgba(151,187,205,1)",
+    			pointColor : "rgba(151,187,205,1)",
+    			pointStrokeColor : "#fff",
+    			data : [0]
+    		}
+    		{
+    			fillColor : "rgba(121,167,185,0.5)",
+    			strokeColor : "rgba(151,187,205,1)",
+    			pointColor : "rgba(151,187,205,1)",
+    			pointStrokeColor : "#fff",
+    			data : [0]
+    		}
+    	]
+    }
 
     // Wait for device API libraries to load
     //
@@ -18,6 +46,8 @@
     //
     function onDeviceReady() {
         startWatch();
+	ctx = document.getElementById("myChart").getContext("2d");
+        new Chart(ctx).Line(data);
     }
 
     // Start watching the acceleration
@@ -25,7 +55,7 @@
     function startWatch() {
 
         // Update acceleration every 3 seconds
-        var options = { frequency: 100 };
+        var options = { frequency: 500 };
 
         watchID = navigator.accelerometer.watchAcceleration(onSuccess, onError, options);
     }
@@ -47,6 +77,12 @@
                             'Acceleration Y: ' + acceleration.y         + '<br />' +
                             'Acceleration Z: ' + acceleration.z         + '<br />' +
                             'Timestamp: '      + acceleration.timestamp + '<br />';
+
+        data.labels.push(acceleration.timestamp)
+        data.datasets[0].push(acceleration.x)
+        data.datasets[1].push(acceleration.y)
+        data.datasets[2].push(acceleration.z)
+	new Chart(ctx).Line(data);
     }
 
     // onError: Failed to get the acceleration
@@ -59,5 +95,6 @@
   </head>
   <body>
     <div id="accelerometer">Waiting for accelerometer...</div>
+    <div id="chart" ><canvas id="myChart" width="400" height="400"></canvas></div>
   </body>
 </html>
