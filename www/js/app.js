@@ -42,7 +42,7 @@ var highest = 0;
  function onDeviceReady() {
     document.body.style.background = 'green';
      var element = document.getElementById('version');
-     element.innterHTML = "version 2"
+     element.innerHTML = "version 2";
      startWatch();
 //  ctx = document.getElementById("myChart").getContext("2d");
 //     new Chart(ctx).Line(data);
