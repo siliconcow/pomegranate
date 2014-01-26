@@ -2,8 +2,9 @@
 <html>
   <head>
     <title>Acceleration Example</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css" />
 
-    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
     <script type="text/javascript" charset="utf-8">
 
     // The watch id references the current `watchAcceleration`
@@ -24,7 +25,7 @@
     function startWatch() {
 
         // Update acceleration every 3 seconds
-        var options = { frequency: 3000 };
+        var options = { frequency: 100 };
 
         watchID = navigator.accelerometer.watchAcceleration(onSuccess, onError, options);
     }
