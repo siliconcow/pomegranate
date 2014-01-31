@@ -31,6 +31,7 @@ var highest = 0;
  // Wait for device API libraries to load
  //
  document.addEventListener("deviceready", onDeviceReady, false);
+ var alive=true
 // var s = document.createElement("script");
 // s.type = "text/javascript";
 // s.src = "js/chart.js";
@@ -42,7 +43,7 @@ var highest = 0;
  function onDeviceReady() {
     document.body.style.background = 'green';
      var element = document.getElementById('version');
-     element.innerHTML = "version 2";
+     element.innerHTML = "version 3";
      startWatch();
 //  ctx = document.getElementById("myChart").getContext("2d");
 //     new Chart(ctx).Line(data);
@@ -80,10 +81,23 @@ var highest = 0;
                          'Acceleration Y: ' + acceleration.y         + '<br />' +
                          'Acceleration Z: ' + acceleration.z         + '<br />' +
                          'Timestamp: '      + acceleration.timestamp + '<br />' +
+                         'Current: '      + current + '<br />' +
                          'Highest: '      + highest + '<br />';
 
-     if (current > 20) {
+     if(alive){
+     if (current > 20)
+     {
 	     document.body.style.background = 'red';
+	     alive=false
+
+     }
+     else if (current > 15)
+     {
+	     document.body.style.background = 'yellow';
+     }else
+     {
+	     document.body.style.background = 'green';
+     }
      }
   //  alert('testing');
   //  data.labels.push(acceleration.timestamp)
