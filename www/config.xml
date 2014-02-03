@@ -7,6 +7,7 @@
     <author email="support@phonegap.com" href="http://phonegap.com">
         PhoneGap Team
     </author>
+     <gap:plugin name="org.apache.cordova.device-motion" />
     <feature name="Accelerometer">
 	        <param name="android-package" value="org.apache.cordova.devicemotion.AccelListener" />
     </feature>
